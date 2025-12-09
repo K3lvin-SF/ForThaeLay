@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Thae Lay</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    /* 🌸 THEME VARIABLES */
+    :root {
+        --bg-color: radial-gradient(circle at top, #ffd6f0 0, #ffb3e6 40%, #ff9fd6 80%);
+        --text-color: #5d1f40;
+        --card-bg: white;
+        --card-shadow: rgba(0,0,0,0.1);
+    }
+
+    body {
+        background: var(--bg-color);
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text-color);
+    }
+
+    /* 🌙 NIGHT THEME */
+    body.night {
+        --bg-color: radial-gradient(circle at top, #2b1b3d, #1c1130, #0c091a);
+        --text-color: #f5dfff;
+        --card-bg: #261933;
+        --card-shadow: rgba(255, 200, 255, 0.25);
+    }
+
+    /* 🌤 SKY THEME */
+    body.sky {
+        --bg-color: radial-gradient(circle at top, #dff4ff, #bfe6ff, #9edaff);
+        --text-color: #0a3a54;
+        --card-bg: #ffffff;
+        --card-shadow: rgba(0, 70, 120, 0.25);
+    }
+
+    /* Floating Hearts */
+    .hearts span {
+        position: fixed;
+        width: 15px;
+        height: 15px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        animation: float 10s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translateY(-20vh); opacity: 0; }
+    }
+
+    .container {
+        width: min(900px, 92%);
+        margin: 40px auto;
+        background: rgba(255,255,255,0.8);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px var(--card-shadow);
+        color: var(--text-color);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 34px;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        margin-bottom: 10px;
+    }
+
+    p.message {
+        text-align: center;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    nav button {
+        background: #ff9bd4;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        color: #551433;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    nav button.active {
+        background: #ff5fa6;
+        color: white;
+    }
+
+    nav button:hover {
+        transform: translateY(-2px);
+    }
+
+    /* THEME BUTTON */
+    #themeToggle {
+        background:#ff9bd4;
+        border:none;
+        padding:8px 18px;
+        border-radius:50px;
+        cursor:pointer;
+        color:white;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    #themeToggle:hover {
+        background:#ff5fa6;
+    }
+
+    .tab { display: none; }
+    .tab.active { display: block; }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        padding: 8px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 6px 15px var(--card-shadow);
+        transition: 0.2s;
+    }
+
+    .card:hover { transform: translateY(-4px); }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .card div {
+        margin-top: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    /* Floating Li Na Names */
+    .floating-name {
+        position: fixed;
+        font-size: 70px;
+        font-weight: 700;
+        background: linear-gradient(90deg, rgba(255,140,180,0.35), rgba(255,110,150,0.35));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0.25;
+        user-select: none;
+        animation: floatName 14s ease-in-out infinite alternate;
+        z-index: -1;
+    }
+
+    @keyframes floatName {
+        0% { transform: translateY(0px) rotate(-5deg); }
+        50% { transform: translateY(-25px) rotate(5deg); }
+        100% { transform: translateY(0px) rotate(-5deg); }
+    }
+
+    /* Soft Loading Screen */
+    #loader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255, 220, 240, 0.6);
+        backdrop-filter: blur(6px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.6s ease;
+        flex-direction: column;
+    }
+
+    #loader.hide { opacity: 0; pointer-events: none; }
+
+    .loader-heart {
+        font-size: 70px;
+        color: #ff5fa6;
+        animation: bounceHeart 0.8s infinite alternate ease-in-out;
+    }
+
+    #loader p {
+        margin-top: 14px;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeText 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes bounceHeart {
+        from { transform: translateY(0px) scale(0.9); }
+        to { transform: translateY(-12px) scale(1.1); }
+    }
+
+    @keyframes fadeText {
+        from { opacity: 0.7; }
+        to { opacity: 1; }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-heart">♡</div>
+  <p id="loaderText">Loading…</p>
+</div>
+
+<!-- Floating Names -->
+<div class="floating-name" style="top:20%; left:10%;">Li Na</div>
+<div class="floating-name" style="top:60%; left:70%; animation-delay:2s;">Li Na</div>
+<div class="floating-name" style="top:40%; left:35%; animation-delay:4s;">Li Na</div>
+
+<div class="container">
+
+    <h1>A Little Website for You</h1>
+    <h3>Your Songs & Books Collection</h3>
+    <p class="message">I made this for you because you mean something special to me in a way I can't explain.</p>
+
+    <!-- Navigation -->
+    <nav>
+        <button class="tab-btn active" data-tab="home">Home</button>
+        <button class="tab-btn" data-tab="songs">Songs</button>
+        <button class="tab-btn" data-tab="books">Books</button>
+    </nav>
+
+    <!-- ⭐ THEME SWITCH BUTTON -->
+    <div style="text-align:center; margin-bottom:20px;">
+        <button id="themeToggle">🎨 Change Theme</button>
+    </div>
+
+    <!-- HOME -->
+    <div id="home" class="tab active">
+        <h2 id="greeting" style="text-align:center; margin-bottom:12px;"></h2>
+
+        <p style="font-size: 16px; line-height: 1.6; text-align:center;">
+            This little space is for you.  
+            When you open the Songs tab, you'll see the music that reminds me of you.  
+            When you open the Books tab, you'll see the stories you like.  
+            I hope it makes you smile a little.
+        </p>
+    </div>
+
+    <!-- SONGS -->
+    <div id="songs" class="tab">
+        <div class="grid">
+
+            <a href="https://youtu.be/UtEZnjVqw30?si=tPSNra9nVR96xs96" target="_blank" class="card">
+                <img src="songs/song1.jpg">
+                <div>အိမ်မက်လေး</div>
+            </a>
+
+            <a href="https://youtu.be/4H7mH9NQlcE?si=ONp1NSYPMeFQlv15" target="_blank" class="card">
+                <img src="songs/song2.jpg">
+                <div>အမှတ်တရနွေ</div>
+            </a>
+
+            <a href="https://youtu.be/t-DCY7QVhCs?si=-ixs0-8BbN-BhenJ" target="_blank" class="card">
+                <img src="songs/song3.jpg">
+                <div>သူငယ်ချင်း</div>
+            </a>
+
+            <a href="https://youtu.be/9DFj3GWtQ6c?si=R6Gdx13MO0VK-vx8" target="_blank" class="card">
+                <img src="songs/song4.jpg">
+                <div>သုံ့ပန်း</div>
+            </a>
+
+            <a href="https://youtu.be/jQGm5czVJhM?si=R3BakLVVqFBkLgjT" target="_blank" class="card">
+                <img src="songs/song5.jpg">
+                <div>အချစ်ဉီး</div>
+            </a>
+
+            <a href="https://youtu.be/oIYWenB637c?si=2QGYe4rNkRJlDM44" target="_blank" class="card">
+                <img src="songs/song6.jpg">
+                <div>To the Bone</div>
+            </a>
+
+            <a href="https://youtu.be/sElE_BfQ67s?si=pBSfLN2yEPZD73BC" target="_blank" class="card">
+                <img src="songs/song7.jpg">
+                <div>Cigarettes After Sex</div>
+            </a>
+
+            <a href="https://youtu.be/KtlgYxa6BMU?si=2hws6WfnNwkQ0lvL" target="_blank" class="card">
+                <img src="songs/song8.jpg">
+                <div>The Night We Met</div>
+            </a>
+
+            <a href="https://youtu.be/KKQl-pIRQMY?si=XN3d6k8U2032rh83" target="_blank" class="card">
+                <img src="songs/song9.jpg">
+                <div>Photograph</div>
+            </a>
+
+            <a href="https://youtu.be/fOQ_-gZsnYQ?si=DWZ7gWoE3u9bPAB4" target="_blank" class="card">
+                <img src="songs/song10.jpg">
+                <div>Back to Friends</div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- BOOKS -->
+    <div id="books" class="tab">
+        <div class="grid">
+
+            <a href="https://phatmal.com/reader?book_id=373&format=epub" target="_blank" class="card">
+                <img src="books/book1.jpg">
+                <div>စကားဝါ</div>
+            </a>
+
+            <div class="card">
+                <img src="books/book2.jpg">
+                <div>ရထားပေါ်ကမိန်းကလေး</div>
+            </div>
+
+            <div class="card">
+                <img src="books/book3.jpg">
+                <div>နှင်းဆီဖြူ</div>
+            </div>
+
+            <div class="card">
+                <img src="books/book4.jpg">
+                <div>ငါကျူးလွန်မိ့တဲ့ကံတစ်ပါးဟာ မင်းပဲ</div>
+            </div>
+
+            <div class="card">
+                <img src="books/book5.jpg">
+                <div>မြစ်တစ်စင်းကို ဂျူး ဖြတ်ကျော်ခြင်း</div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- SECRET PAGE LINK -->
+<div style="text-align:center; margin-top:24px; font-size:12px; color:#ff9ac6;">
+  <a href="password.html" style="text-decoration:none; color:#ff5c96;">
+    ♡ a tiny extra page just for you ♡
+  </a>
+</div>
+
+<!-- JS: Tabs -->
+<script>
+    const buttons = document.querySelectorAll(".tab-btn");
+    const tabs = document.querySelectorAll(".tab");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            tabs.forEach(t => t.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById(btn.dataset.tab).classList.add("active");
+        });
+    });
+</script>
+
+<!-- JS: Random Loader -->
+<script>
+const messages = [
+  "Li Na, wait a second… ♡",
+  "Hold on, pretty girl… ♡",
+  "Wait for me, Li Na… ♡",
+  "Just a moment, sunshine… ♡",
+  "Loading something cute for you… ♡",
+  "One sec Li Na… I’m getting things ready ♡",
+  "Stay there, beautiful… ♡"
+];
+
+function setRandomMessage() {
+  const text = document.getElementById("loaderText");
+  text.textContent = messages[Math.floor(Math.random() * messages.length)];
+}
+
+window.addEventListener("load", () => {
+  setRandomMessage();
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("hide");
+  }, 900);
+});
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const loader = document.getElementById("loader");
+    loader.classList.remove("hide");
+    setRandomMessage();
+    setTimeout(() => {
+      loader.classList.add("hide");
+    }, 900);
+  });
+});
+</script>
+
+<!-- JS: Time-based Greeting -->
+<script>
+function getMyanmarHour() {
+    const nowUTC = new Date();
+    const mmt = new Date(nowUTC.getTime() + (6.5 * 60 * 60 * 1000));
+    return mmt.getHours();
+}
+
+function updateGreeting() {
+    const hour = getMyanmarHour();
+    let message = "";
+
+    if (hour >= 6 && hour < 12) {
+        message = "🌸 Good morning, Li Na";
+    }
+    else if (hour >= 12 && hour < 16) {
+        message = "☀️ Good afternoon, Li Na";
+    }
+    else if (hour >= 16 && hour < 19) {
+        message = "🌅 Good evening, Li Na";
+    }
+    else {
+        message = "🌙 Good night, Li Na";
+    }
+
+    document.getElementById("greeting").textContent = message;
+}
+
+updateGreeting();
+</script>
+
+<!-- JS: THEME SWITCHER -->
+<script>
+let themes = ["pink", "night", "sky"];
+let currentTheme = localStorage.getItem("theme") || "pink";
+
+applyTheme(currentTheme);
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+    let index = themes.indexOf(currentTheme);
+    index = (index + 1) % themes.length;
+    currentTheme = themes[index];
+    applyTheme(currentTheme);
+    localStorage.setItem("theme", currentTheme);
+});
+
+function applyTheme(theme) {
+    document.body.classList.remove("night", "sky");
+
+    if (theme === "night") document.body.classList.add("night");
+    if (theme === "sky") document.body.classList.add("sky");
+}
+</script>
+
+</body>
+
+<!-- Music Player -->
+<audio id="bgm" loop muted>
+  <source src="music/forher.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicToggle" style="
+  background:#ff82b2;
+  padding:10px 16px;
+  border-radius:20px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  width:max-content;
+  margin:10px auto;
+  font-size:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  transition:0.3s ease;
+">
+  🔊 Turn Music On
+</div>
+
+<script>
+  const audio = document.getElementById("bgm");
+  const toggle = document.getElementById("musicToggle");
+  audio.volume = 0.5;
+  audio.play();
+  let isPlaying = false;
+
+  toggle.addEventListener("click", () => {
+    if (!isPlaying) {
+      audio.muted = false;
+      toggle.textContent = "🔇 Turn Music Off";
+      toggle.style.background = "#ff5c96";
+      isPlaying = true;
+    } else {
+      audio.muted = true;
+      toggle.textContent = "🔊 Turn Music On";
+      toggle.style.background = "#ff82b2";
+      isPlaying = false;
+    }
+  });
+</script>
+
+</html>
