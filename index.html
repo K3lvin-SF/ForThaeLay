@@ -13,6 +13,16 @@
         font-family: "Poppins", sans-serif;
     }
 
+    .video-thumb {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #000;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+
     /* 🌸 THEME VARIABLES */
     :root {
         --bg-color: radial-gradient(circle at top, #ffd6f0 0, #ffb3e6 40%, #ff9fd6 80%);
@@ -257,6 +267,7 @@
         <button class="tab-btn active" data-tab="home">Home</button>
         <button class="tab-btn" data-tab="songs">Songs</button>
         <button class="tab-btn" data-tab="books">Books</button>
+        <button class="tab-btn" data-tab="videos">Videos</button>
     </nav>
 
     <!-- ⭐ THEME SWITCH BUTTON -->
@@ -366,6 +377,87 @@
     </div>
 
 </div>
+
+<!-- VIDEOS TAB -->
+<div id="videos" class="tab">
+  
+  <h2 style="text-align:center; margin-bottom:14px; color:var(--text-color);">
+    🎞️ Your Video Collections
+  </h2>
+
+  <p style="text-align:center; opacity:0.8; margin-bottom:20px;">
+    These are your saved videos. Tap to watch them anytime.
+  </p>
+
+  <div class="grid">
+
+    <!-- Video 1 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her1.mp4" type="video/mp4">
+        </video>
+        <div>Video 1</div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her2.mp4" type="video/mp4">
+        </video>
+        <div>Video 2</div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her3.mp4" type="video/mp4">
+        </video>
+        <div>Video 3</div>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her4.mp4" type="video/mp4">
+        </video>
+        <div>Video 4</div>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her5.mp4" type="video/mp4">
+        </video>
+        <div>Video 5</div>
+    </div>
+
+    <!-- Video 6 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her6.mp4" type="video/mp4">
+        </video>
+        <div>Video 6</div>
+    </div>
+
+    <!-- Video 7 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her7.mp4" type="video/mp4">
+        </video>
+        <div>Video 7</div>
+    </div>
+
+    <!-- Video 8 -->
+    <div class="card">
+        <video controls class="video-thumb">
+            <source src="videos/her8.mp4" type="video/mp4">
+        </video>
+        <div>Video 8</div>
+    </div>
+
+  </div>
+</div>
+
 
 <!-- SECRET PAGE LINK -->
 <div style="text-align:center; margin-top:24px; font-size:12px; color:#ff9ac6;">
